@@ -8,11 +8,11 @@ class ListAllUsersController {
   handle(request: Request, response: Response): Response {
     try {
       const { user_id } = request.headers;
-      this.listAllUsersUseCase.execute({ user_id: String(user_id) });
+      const allUsers = this.listAllUsersUseCase.execute({ user_id: String(user_id) });
 
-      return response.status(201).send();
-    } catch (err) {
-      return response.status(400).json({ error: "Permission denied!" });
+      return response.json(allUsers);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
     }
   }
 }
